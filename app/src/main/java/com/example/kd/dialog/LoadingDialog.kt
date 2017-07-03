@@ -31,9 +31,9 @@ class LoadingDialog : Dialog {
         return showDialog(context, null, cancelable, cancelListener)
     }
 
-
+    lateinit var dialog: LoadingDialog
     fun showDialog(context: Context, message: CharSequence?, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?): LoadingDialog {
-        var dialog = LoadingDialog(context, R.style.LoadingDialog)
+        dialog = LoadingDialog(context, R.style.LoadingDialog)
         dialog.setContentView(R.layout.layout_loadingdialog);
         var m = dialog.findViewById(R.id.message) as TextView
         if (!TextUtils.isEmpty(message)) {
@@ -42,13 +42,18 @@ class LoadingDialog : Dialog {
             m.visibility = View.GONE
         }
         dialog.setCanceledOnTouchOutside(false)
-        dialog.setCancelable(cancelable);
-        dialog.setOnCancelListener(cancelListener);
+        dialog.setCancelable(cancelable)
+        dialog.setOnCancelListener(cancelListener)
         dialog.window.attributes.gravity = Gravity.CENTER
         val lp = dialog.window.attributes
-        lp.dimAmount = 0.2f;
-        dialog.window.attributes = lp;
-        dialog.show();
+        lp.dimAmount = 0.2f
+        dialog.window.attributes = lp
+        dialog.show()
         return dialog
+    }
+
+    fun dismissDialog() {
+        if (dialog.isShowing)
+            dialog.dismiss()
     }
 }
